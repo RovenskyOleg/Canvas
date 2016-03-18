@@ -8,4 +8,13 @@ var context = canvas.getContext('2d');
 canvas.width = 500;
 canvas.height = 400;
 
-context.lineWidth = 15;
+canvas.strokeStyle = '#000';
+
+context.lineWidth = 5;
+
+context.beginPath();
+
+//context.rect(30, 30, 150, 150);
+context.fillRect(30, 30, 150, 150);
+//context.stroke();
+
