@@ -4,9 +4,9 @@
 var redGamePiece, blueGamePiece, yellowGamePiece;
 
 function startGame() {
-    redGamePiece = new component(75, 75, "red", 10, 10);
-    blueGamePiece = new component(75, 75, "yellow", 50, 60);
-    yellowGamePiece = new component(75, 75, "blue", 10, 110);
+    redGamePiece = new Component(75, 75, "red", 10, 10);
+    blueGamePiece = new Component(75, 75, "yellow", 50, 60);
+    yellowGamePiece = new Component(75, 75, "blue", 10, 110);
 
     myGameArea.start();
 }
@@ -25,13 +25,13 @@ var myGameArea = {
     }
 };
 
-function component(width, height, color, x, y) {
+function Component(width, height, color, x, y) {
     this.width = width;
     this.height = height;
     this.x = x;
     this.y = y;
     this.update = function() {
-        ctx = myGameArea.context;
+        var ctx = myGameArea.context;
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
