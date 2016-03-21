@@ -6,8 +6,17 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-<h1>Hi it test5 canvas App</h1>
+    <h1>Hi it test5 canvas App</h1>
 
-<script type="application/javascript" src="test5.js"></script>
+    <div id="canvas"></div>
+
+    <div>
+        <button omousedown="moveup()" onmouseup="stopMove()" ontouchstart="moveup()">UP</button>
+        <button omousedown="movedown()" onmouseup="stopMove()" ontouchstart="movedown()">DOWN</button>
+        <button omousedown="moveleft()" onmouseup="stopMove()" ontouchstart="moveleft()">LEFT</button>
+        <button omousedown="moveright()" onmouseup="stopMove()" ontouchstart="moveright()">RIGHT</button>
+    </div>
+
+    <script type="application/javascript" src="test5.js"></script>
 </body>
 </html>
