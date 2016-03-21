@@ -1,11 +1,14 @@
 /**
  * Created by Oleg_Rovenskyi on 3/18/2016.
  */
-var myGamePiece;
+var redGamePiece, blueGamePiece, yellowGamePiece;
 
 function startGame() {
+    redGamePiece = new component(75, 75, "red", 10, 10);
+    blueGamePiece = new component(75, 75, "yellow", 50, 60);
+    yellowGamePiece = new component(75, 75, "blue", 10, 110);
+
     myGameArea.start();
-    myGamePiece = new component(10, 140, "red", 10, 120);
 }
 
 var myGameArea = {
@@ -36,8 +39,16 @@ function component(width, height, color, x, y) {
 
 function updateGameArea() {
     myGameArea.clear();
-    myGamePiece.x += 1;
-    myGamePiece.update();
+
+    redGamePiece.x += 1;
+    yellowGamePiece.x += 1;
+    yellowGamePiece.y += 1;
+    blueGamePiece.x += 1;
+    blueGamePiece.y -= 1;
+
+    redGamePiece.update();
+    yellowGamePiece.update();
+    blueGamePiece.update();
 }
 
 startGame();
