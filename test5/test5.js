@@ -6,12 +6,15 @@ var myGamePiece,
     blueGamePiece,
     yellowGamePiece;
 var doc = document;
+var myObstacle;
 
 function startGame() {
     myGamePiece = new Component(75, 75, "red", 10, 10);
     //redGamePiece = new Component(75, 75, "red", 10, 10);
     //blueGamePiece = new Component(75, 75, "yellow", 50, 60);
     //yellowGamePiece = new Component(75, 75, "blue", 10, 110);
+
+    myObstacle = new Component(10, 200, "green", 300, 120);
 
     myGameArea.start();
 }
@@ -75,6 +78,8 @@ function updateGameArea() {
     if (myGameArea.keys && myGameArea.keys[39]) {myGamePiece.speedX = 1; }
     if (myGameArea.keys && myGameArea.keys[38]) {myGamePiece.speedY = -1; }
     if (myGameArea.keys && myGameArea.keys[40]) {myGamePiece.speedY = 1; }
+
+    myObstacle.update();
 
     myGamePiece.newPos();
     myGamePiece.update();
