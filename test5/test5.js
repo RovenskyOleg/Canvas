@@ -1,18 +1,14 @@
 /**
  * Created by Oleg_Rovenskyi on 3/18/2016.
  */
-var myGamePiece,
-    redGamePiece,
-    blueGamePiece,
-    yellowGamePiece;
+var myGamePiece;
 var doc = document;
 var myObstacle;
+var myObstacles = [];
+
 
 function startGame() {
-    myGamePiece = new Component(75, 75, "red", 10, 10);
-    //redGamePiece = new Component(75, 75, "red", 10, 10);
-    //blueGamePiece = new Component(75, 75, "yellow", 50, 60);
-    //yellowGamePiece = new Component(75, 75, "blue", 10, 110);
+    myGamePiece = new Component(20, 20, "red", 10, 10);
 
     myObstacle = new Component(10, 200, "green", 300, 120);
 
@@ -26,6 +22,7 @@ var myGameArea = {
         this.canvas.height = 270;
         this.context = this.canvas.getContext("2d");
         doc.getElementById('canvas').appendChild(this.canvas);
+        this.frameNo = 0;
         this.interval = setInterval(updateGameArea, 20);
 
         window.addEventListener('keydown', function (e) {
@@ -38,6 +35,9 @@ var myGameArea = {
     },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    stop : function() {
+        clearInterval(this.interval);
     }
 };
 
@@ -57,48 +57,76 @@ function Component(width, height, color, x, y) {
         this.x += this.speedX;
         this.y += this.speedY;
     };
+    this.crashWith = function(otherobj) {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x;
+        var otherright = otherobj.x + (otherobj.width);
+        var othertop = otherobj.y;
+        var otherbottom = otherobj.y + (otherobj.height);
+        var crash = true;
+        if ((mybottom < othertop) ||
+            (mytop > otherbottom) ||
+            (myright < otherleft) ||
+            (myleft > otherright)) {
+            crash = false;
+        }
+        return crash;
+    };
 }
 
 function updateGameArea() {
+    var x, height, gap, minHeight, maxHeight, minGap, maxGap;
+    for (var i = 0; i < myObstacles.length; i += 1) {
+        if (myGamePiece.crashWith(myObstacles[i])) {
+            myGameArea.stop();
+            return;
+        }
+    }
     myGameArea.clear();
-
-    //redGamePiece.x += 1;
-    //yellowGamePiece.x += 1;
-    //yellowGamePiece.y += 1;
-    //blueGamePiece.x += 1;
-    //blueGamePiece.y -= 1;
-
-    //redGamePiece.update();
-    //yellowGamePiece.update();
-    //blueGamePiece.update();
+    myGameArea.frameNo += 1;
+    if (myGameArea.frameNo == 1 || everyinterval(150)) {
+        x = myGameArea.canvas.width;
+        minHeight = 20;
+        maxHeight = 200;
+        height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
+        minGap = 50;
+        maxGap = 200;
+        gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+        myObstacles.push(new Component(10, height, "green", x, 0));
+        myObstacles.push(new Component(10, x - height - gap, "blue", x, height + gap));
+    }
+    for (i = 0; i < myObstacles.length; i += 1) {
+        myObstacles[i].x += -1;
+        myObstacles[i].update();
+    }
 
     myGamePiece.speedX = 0;
     myGamePiece.speedY = 0;
-    if (myGameArea.keys && myGameArea.keys[37]) {myGamePiece.speedX = -1; }
-    if (myGameArea.keys && myGameArea.keys[39]) {myGamePiece.speedX = 1; }
-    if (myGameArea.keys && myGameArea.keys[38]) {myGamePiece.speedY = -1; }
-    if (myGameArea.keys && myGameArea.keys[40]) {myGamePiece.speedY = 1; }
-
-    myObstacle.update();
+    if (myGameArea.keys && myGameArea.keys[37]) {
+        myGamePiece.speedX = -1;
+    }
+    if (myGameArea.keys && myGameArea.keys[39]) {
+        myGamePiece.speedX = 1;
+    }
+    if (myGameArea.keys && myGameArea.keys[38]) {
+        myGamePiece.speedY = -1;
+    }
+    if (myGameArea.keys && myGameArea.keys[40]) {
+        myGamePiece.speedY = 1;
+    }
 
     myGamePiece.newPos();
     myGamePiece.update();
 }
 
-function moveup() {
-    myGamePiece.speedY -= 1;
-}
-
-function movedown() {
-    myGamePiece.speedY += 1;
-}
-
-function moveleft() {
-    myGamePiece.speedX -= 1;
-}
-
-function moveright() {
-    myGamePiece.speedX += 1;
+function everyinterval(n) {
+    if ((myGameArea.frameNo / n) % 1 == 0) {
+        return true;
+    }
+    return false;
 }
 
 startGame();
