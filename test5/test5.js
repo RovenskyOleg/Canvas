@@ -55,6 +55,7 @@ function Component(width, height, color, x, y, type) {
     this.speedY = 0;
     this.x = x;
     this.y = y;
+
     this.update = function() {
         var ctx = myGameArea.context;
         if (type === "image") {

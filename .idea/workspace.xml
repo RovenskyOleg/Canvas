@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8a2d2fb4-19d8-4280-8426-209764787508" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test5/index.html" afterPath="$PROJECT_DIR$/test5/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test5/test5.js" afterPath="$PROJECT_DIR$/test5/test5.js" />
     </list>
     <ignored path="canvas.iws" />
@@ -115,8 +114,8 @@
       <file leaf-file-name="test5.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test5/test5.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.9340103">
-              <caret line="104" column="0" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.69551283">
+              <caret line="158" column="27" selection-start-line="158" selection-start-column="27" selection-end-line="158" selection-end-column="27" />
               <folding>
                 <element signature="e#0#50#0" expanded="false" />
               </folding>
@@ -674,8 +673,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test5/test5.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.9340103">
-          <caret line="104" column="0" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.69551283">
+          <caret line="158" column="27" selection-start-line="158" selection-start-column="27" selection-end-line="158" selection-end-column="27" />
           <folding>
             <element signature="e#0#50#0" expanded="false" />
           </folding>
