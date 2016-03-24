@@ -5,11 +5,12 @@ var myGamePiece;
 var doc = document;
 var myObstacle;
 var myObstacles = [];
+var myBackground;
 
 
 function startGame() {
-    myGamePiece = new Component(20, 20, "red", 10, 10);
-
+    myBackground = new Component(656, 270, "openspace.png", 0, 0, "image");
+    myGamePiece = new Component(50, 50, "space1.png", 10, 10, "image");
     myObstacle = new Component(10, 200, "green", 300, 120);
 
     myGameArea.start();
@@ -41,7 +42,13 @@ var myGameArea = {
     }
 };
 
-function Component(width, height, color, x, y) {
+function Component(width, height, color, x, y, type) {
+    this.type = type;
+    if (type == "image") {
+        this.image = new Image();
+        this.image.src = color;
+    }
+
     this.width = width;
     this.height = height;
     this.speedX = 0;
@@ -50,8 +57,15 @@ function Component(width, height, color, x, y) {
     this.y = y;
     this.update = function() {
         var ctx = myGameArea.context;
-        ctx.fillStyle = color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        if (type === "image") {
+            ctx.drawImage(this.image,
+                this.x,
+                this.y,
+                this.width, this.height);
+        } else {
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
     };
     this.newPos = function() {
         this.x += this.speedX;
@@ -85,8 +99,13 @@ function updateGameArea() {
             return;
         }
     }
+
     myGameArea.clear();
     myGameArea.frameNo += 1;
+
+    myBackground.newPos();
+    myBackground.update();
+
     if (myGameArea.frameNo == 1 || everyinterval(150)) {
         x = myGameArea.canvas.width;
         minHeight = 20;
@@ -98,28 +117,42 @@ function updateGameArea() {
         myObstacles.push(new Component(10, height, "green", x, 0));
         myObstacles.push(new Component(10, x - height - gap, "blue", x, height + gap));
     }
+
     for (i = 0; i < myObstacles.length; i += 1) {
         myObstacles[i].x += -1;
         myObstacles[i].update();
     }
 
-    myGamePiece.speedX = 0;
-    myGamePiece.speedY = 0;
-    if (myGameArea.keys && myGameArea.keys[37]) {
-        myGamePiece.speedX = -1;
-    }
-    if (myGameArea.keys && myGameArea.keys[39]) {
-        myGamePiece.speedX = 1;
-    }
-    if (myGameArea.keys && myGameArea.keys[38]) {
-        myGamePiece.speedY = -1;
-    }
-    if (myGameArea.keys && myGameArea.keys[40]) {
-        myGamePiece.speedY = 1;
-    }
+    clearmove();
+    move();
 
     myGamePiece.newPos();
     myGamePiece.update();
+}
+
+function move() {
+    if (myGameArea.keys && myGameArea.keys[37]) {
+        myGamePiece.speedX = -1;
+        myGamePiece.image.src = "space2.png";
+    }
+    if (myGameArea.keys && myGameArea.keys[39]) {
+        myGamePiece.speedX = 1;
+        myGamePiece.image.src = "space2.png";
+    }
+    if (myGameArea.keys && myGameArea.keys[38]) {
+        myGamePiece.speedY = -1;
+        myGamePiece.image.src = "space2.png";
+    }
+    if (myGameArea.keys && myGameArea.keys[40]) {
+        myGamePiece.speedY = 1;
+        myGamePiece.image.src = "space2.png";
+    }
+}
+
+function clearmove() {
+    myGamePiece.image.src = "space1.png";
+    myGamePiece.speedX = 0;
+    myGamePiece.speedY = 0;
 }
 
 function everyinterval(n) {
